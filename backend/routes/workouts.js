@@ -1,4 +1,5 @@
 const express = require("express");
+const Workout = require("../models/workoutModel");
 
 //we don't have access to the app object here, so we need to create a new router object
 const router = express.Router();
@@ -14,7 +15,15 @@ router.get("/:id", (req, res) => {
 });
 
 //POST a workout
-router.post("/", (req, res) => {
+router.post("/", async (req, res) => {
+  const { title, load, reps } = req.body;
+
+  try {
+    const workout = await Workout.create({ title, load, reps });
+    res.status(200).json({ workout });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
   res.json({ mssg: "POST a workout" });
 });
 
@@ -22,7 +31,6 @@ router.post("/", (req, res) => {
 router.delete("/:id", (req, res) => {
   res.json({ mssg: "DELETE a workout" });
 });
-
 //UPDATE a workout
 router.patch("/:id", (req, res) => {
   res.json({ mssg: "POST a workout" });
