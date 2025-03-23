@@ -4,6 +4,8 @@ const {
   createWorkout,
   getWorkouts,
   getWorkout,
+  deleteWorkout,
+  updateWorkout,
 } = require("../controllers/workoutController");
 
 //we don't have access to the app object here, so we need to create a new router object
@@ -19,12 +21,8 @@ router.get("/:id", getWorkout);
 router.post("/", createWorkout);
 
 //DELETE a workout
-router.delete("/:id", (req, res) => {
-  res.json({ mssg: "DELETE a workout" });
-});
+router.delete("/:id", deleteWorkout);
 //UPDATE a workout
-router.patch("/:id", (req, res) => {
-  res.json({ mssg: "POST a workout" });
-});
+router.patch("/:id", updateWorkout);
 
 module.exports = router;
