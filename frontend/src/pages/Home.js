@@ -1,16 +1,19 @@
 import { useState, useEffect } from "react";
 
 import WorkoutDetails from "../components/WorkoutDetails";
+import WorkoutForm from "../components/WorkoutForm";
 
 const Home = () => {
-  const [workouts, setWorkouts] = useState(null);
+  const [workouts, setWorkouts] = useState([]);
   useEffect(() => {
     const fetchWorkouts = async () => {
       const response = await fetch("/api/workouts");
       const json = await response.json();
+      console.log(json);
 
       if (response.ok) {
-        setWorkouts(json);
+        //Need to change it from an object to Array
+        setWorkouts(json.workouts);
       }
     };
 
@@ -27,6 +30,7 @@ const Home = () => {
             </p>
           ))}
       </div>
+      <WorkoutForm />
     </div>
   );
 };
