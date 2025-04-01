@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { useWorkoutsContext } from "../hooks/useWorkoutsContext";
 
 import WorkoutDetails from "../components/WorkoutDetails";
 import WorkoutForm from "../components/WorkoutForm";
 
 const Home = () => {
-  const [workouts, setWorkouts] = useState([]);
+  const { workouts, dispatch } = useWorkoutsContext();
   useEffect(() => {
     const fetchWorkouts = async () => {
       const response = await fetch("/api/workouts");
@@ -13,7 +14,9 @@ const Home = () => {
 
       if (response.ok) {
         //Need to change it from an object to Array
-        setWorkouts(json.workouts);
+        // setWorkouts(json.workouts);
+        //changed the context, instead of local state we are using global context
+        dispatch({ type: "SET_WORKOUTS", payload: json.workouts });
       }
     };
 
